@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>Configura la Simulazione</h2>
+<mat-dialog-content class="mat-typography">
+    <div style="text-align: center;">
+        <div style="display: inline-block;">
+            <h3><strong style="color: darkblue;">Definisci numero di threads,messaggi o minuti e delay</strong></h3>
+            <mat-form-field class="example-full-width">
+                <mat-label>Numero di Thread</mat-label>
+                <input matInput placeholder="Ex. 10" [(ngModel)]="simulation.threads">
+            </mat-form-field>
+            <br>
+            <div>
+                <label id="example-radio-group-label">Scegli il tipo di simulazione</label>
+                <br>
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                    [(ngModel)]="simulationTypeChosed">
+                    <mat-radio-button class="example-radio-button" *ngFor="let simulationType of simulationTypes"
+                     [value]="simulationType" (change)="radioChange($event)"> 
+                        {{simulationType}}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <br>
+                <div *ngIf="simulationTypeChosed && simulationTypeChosed=='Messages'">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Numero di Messaggi</mat-label>
+                        <input matInput placeholder="Ex. 50" [(ngModel)]="simulation.messages">
+                    </mat-form-field>
+                </div>
+                <div *ngIf="simulationTypeChosed && simulationTypeChosed=='Minutes'">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Durata in minuti</mat-label>
+                        <input matInput placeholder="Ex. 50" [(ngModel)]="simulation.minutes">
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-form-field class="example-full-width">
+                <mat-label>Secondi di Delay intra-messaggio</mat-label>
+                <input matInput placeholder="Ex. 5" [(ngModel)]="simulation.delay">
+            </mat-form-field>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="simulation" cdkFocusInitial>Prosegui</button>
+</mat-dialog-actions>

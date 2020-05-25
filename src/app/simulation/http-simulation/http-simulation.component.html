@@ -1,0 +1,127 @@
+<div style="text-align: center;">
+    <div style="display: inline-block; margin-top: 2%;">
+        <h2 style="color:darkblue"><strong>Define an Http Multi Thread Test</strong></h2>
+        <mat-form-field>
+            <mat-label>Http Method</mat-label>
+            <mat-select [(ngModel)]="httpMethod" name="httpMethod">
+                <mat-option *ngFor="let httpMethod of httpMethods" [value]="httpMethod.value">
+                    {{httpMethod.viewValue}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="example-full-width">
+            <input matInput disabled value="http://">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Server Host</mat-label>
+            <input matInput placeholder="Ex. 127.0.0.1" [(ngModel)]="serverUrl">
+        </mat-form-field>
+        <span> : </span>
+        <mat-form-field class="example-full-width">
+            <mat-label>Server port</mat-label>
+            <input matInput placeholder="Ex. 8080" [(ngModel)]="serverPort">
+            <mat-hint align="start"><strong>If does not exist, leave blank</strong></mat-hint>
+        </mat-form-field>
+        <span> / </span>
+        <mat-form-field class="example-full-width">
+            <mat-label>Endpoint</mat-label>
+            <input matInput placeholder="test/utente" [(ngModel)]="serverEndpoint">
+            <mat-hint align="start"><strong>If does not exist, leave blank</strong></mat-hint>
+        </mat-form-field>
+        <br>
+        <br>
+        <span style="color:blue"><strong style="color:darkblue">Query Parameter</strong>(add, if required, pairs of
+            key-value parameter)</span>
+        <div style="margin-top: 2%;" *ngFor="let queryParam of queryParams">
+            <mat-form-field class="example-full-width">
+                <mat-label>Key</mat-label>
+                <input matInput placeholder="Ex. user" [(ngModel)]="queryParam.key">
+            </mat-form-field>
+            <mat-form-field style="margin-left: 2%;" class="example-full-width">
+                <mat-label>Value</mat-label>
+                <input matInput placeholder="Ex. john" [(ngModel)]="queryParam.value">
+            </mat-form-field>
+        </div>
+        <br>
+        <div class="example-button-container">
+            <button mat-mini-fab color="primary" (click)="addQueryParameter()">+</button>
+        </div>
+        <div *ngIf="httpMethod && httpMethod!='GET' && httpMethod!='DELETE'">
+            <br>
+            <br>
+            <span><strong style="color:darkblue">Http Request Body:</strong></span>
+            <br>
+            <br>
+            <mat-form-field class="example-full-width">
+                <mat-label>Body</mat-label>
+                <textarea matInput placeholder="test/utente" [(ngModel)]="body"></textarea>
+            </mat-form-field>
+        </div>
+        <br>
+        <br>
+        <div style="text-align: center; margin-top: 2%;">
+            <div style="display: inline-block;">
+                <button mat-flat-button color="primary" (click)="configureSimulation()">Configura Simulazione</button>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="example-button-container" style="text-align: right;" *ngIf="simulation">
+            <button mat-flat-button color="primary" (click)="elaborateSimulation()">Elabora Simulazione</button>
+        </div>
+    </div>
+    <br>
+    <br>
+    <mat-divider></mat-divider>
+    <div style="text-align: center; margin-top: 2%;" *ngIf="completeUrl && simulation">
+        <span><strong style="color:darkblue">Riepilogo Http Request:</strong></span>
+        <br>
+        <br>
+        <mat-form-field style="margin-left: 2%;" class="example-full-width">
+            <mat-label>Http Method</mat-label>
+            <textarea matInput disabled placeholder="Http Method" [(ngModel)]="httpMethod"></textarea>
+        </mat-form-field>
+        <br>
+        <mat-form-field style="margin-left: 2%;" class="example-full-width">
+            <mat-label>Server Url</mat-label>
+            <textarea matInput disabled style="width: auto;" placeholder="Server Url"
+                [(ngModel)]="completeUrl"></textarea>
+        </mat-form-field>
+        <br>
+        <mat-form-field style="margin-left: 2%;" class="example-full-width" *ngIf="body">
+            <mat-label>Request Body</mat-label>
+            <textarea matInput disabled style="width: auto;" placeholder="Request Body"
+                [(ngModel)]="body"></textarea>
+        </mat-form-field>
+        <br>
+        <span><strong style="color:darkblue">Riepilogo Configurazione:</strong></span>
+        <br>
+        <br>
+        <mat-form-field style="margin-left: 2%;" class="example-full-width">
+            <mat-label>Numero Threads</mat-label>
+            <textarea matInput disabled placeholder="Numero Threads" [(ngModel)]="simulation.threads"></textarea>
+        </mat-form-field>
+        <br>
+        <mat-form-field style="margin-left: 2%;" class="example-full-width" *ngIf="simulation.messages">
+            <mat-label>Numero Messaggi</mat-label>
+            <textarea matInput disabled style="width: auto;" placeholder="Numero Messaggi"
+                [(ngModel)]="simulation.messages"></textarea>
+        </mat-form-field>
+        <br>
+        <mat-form-field style="margin-left: 2%;" class="example-full-width" *ngIf="simulation.minutes">
+            <mat-label>Durata in minuti</mat-label>
+            <textarea matInput disabled style="width: auto;" placeholder="Durata in minuti"
+                [(ngModel)]="simulation.minutes"></textarea>
+        </mat-form-field>
+        <br>
+        <mat-form-field style="margin-left: 2%;" class="example-full-width">
+            <mat-label>Delay intra-messaggio</mat-label>
+            <textarea matInput disabled style="width: auto;" placeholder="Delay intra-messaggio"
+                [(ngModel)]="simulation.delay"></textarea>
+        </mat-form-field>
+        <br>
+        <br>
+        <button mat-flat-button color="primary" (click)="startSimulation()">Starta Simulazione</button>
+    </div>
+</div>
